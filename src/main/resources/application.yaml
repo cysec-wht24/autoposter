@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: autoposter
+  datasource:
+    url: jdbc:mysql://localhost:3306/autoposter
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+    username: ${TELEGRAM_BOT_USERNAME}
+    channel: ${TELEGRAM_CHANNEL}
+    owner-id: ${TELEGRAM_OWNER_ID}
