@@ -58,7 +58,22 @@ public class TelegramBotConfig {
                 }
 
                 if (text.equals("/start")) {
-                    send(chatId, "Authenticated! Send me a message to queue it for posting.");
+                    send(chatId, """
+                        🤖 Autoposter Bot
+                        
+                        Available commands:
+                        
+                        /start - Show this menu
+                        /post  - Queue a message for posting
+                        
+                        Usage:
+                        /post Your message | https://yourstream.link
+                        
+                        Example:
+                        /post Going live now! | https://youtube.com/live/abc123
+                        
+                        📢 Posts to: Telegram + Discord
+                        """);
                 } else if (text.startsWith("/post ")) {
                     String[] parts = text.substring(6).split("\\|");
                     if (parts.length < 2) {
