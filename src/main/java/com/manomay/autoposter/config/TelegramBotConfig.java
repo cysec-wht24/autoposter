@@ -59,9 +59,18 @@ public class TelegramBotConfig {
 
                 if (text.equals("/start")) {
                     send(chatId, "Authenticated! Send me a message to queue it for posting.");
+                } else if (text.startsWith("/post ")) {
+                    String[] parts = text.substring(6).split("\\|");
+                    if (parts.length < 2) {
+                        send(chatId, "Format: /post Your message | https://yourlink.com");
+                        return;
+                    }
+                    String content = parts[0].trim();
+                    String streamLink = parts[1].trim();
+                    messageService.saveMessage(senderId.toString(), content, streamLink);
+                    send(chatId, "Queued: " + content + "\nLink: " + streamLink);
                 } else {
-                    messageService.saveMessage(senderId.toString(), text);
-                    send(chatId, "Queued: " + text);
+                    send(chatId, "Use /post Your message | https://yourlink.com");
                 }
             }
 

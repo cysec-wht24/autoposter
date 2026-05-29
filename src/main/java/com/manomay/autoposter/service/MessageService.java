@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-
 @Service
 public class MessageService {
 
@@ -18,10 +16,11 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
     
-    public Message saveMessage(String sender, String content) {
+    public Message saveMessage(String sender, String content, String streamLink) {
         Message message = new Message();
         message.setSender(sender);
         message.setContent(content);
+        message.setStreamLink(streamLink);
         message.setScheduledTime(LocalDateTime.now());
         return messageRepository.save(message);
     }
@@ -38,5 +37,4 @@ public class MessageService {
         message.setStatus("POSTED");
         messageRepository.save(message);
     }
-
 }

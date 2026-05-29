@@ -11,9 +11,19 @@ spring:
       ddl-auto: update
     show-sql: true
 
+gemini:
+  api:
+    key: ${GEMINI_API_KEY}
+
 telegram:
   bot:
     token: ${TELEGRAM_BOT_TOKEN}
     username: ${TELEGRAM_BOT_USERNAME}
     channel: ${TELEGRAM_CHANNEL}
     owner-id: ${TELEGRAM_OWNER_ID}
+
+discord:
+  bot:
+    token: ${DISCORD_BOT_TOKEN}
+    channel-id: ${DISCORD_CHANNEL_ID}
+ 
