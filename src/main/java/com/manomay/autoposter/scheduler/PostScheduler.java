@@ -40,23 +40,39 @@ public class PostScheduler {
             try {
 
                 // Telegram
-                org.telegram.telegrambots.meta.api.methods.send.SendMessage post =
-                    new org.telegram.telegrambots.meta.api.methods.send.SendMessage();
-                post.setChatId(channel);
-                String telegramText = llmService.generatePost(message.getContent(), message.getStreamLink(), "TELEGRAM");
-                post.setText(telegramText);
-                telegramBot.execute(post);
-
-                // Discord
-                String discordText = llmService.generatePost(message.getContent(), message.getStreamLink(), "DISCORD");
-                var discordChannel = jda.getTextChannelById(discordChannelId);
-                if (discordChannel != null && discordText != null) {
-                    discordChannel.sendMessage(discordText).queue();
-                } else {
-                    System.err.println("Discord channel not found or text is null");
+                if (!messageService.isPlatformPosted(message, "TELEGRAM")) {
+                    try {
+                        String telegramText = llmService.generatePost(message.getContent(), message.getStreamLink(), "TELEGRAM");
+                        org.telegram.telegrambots.meta.api.methods.send.SendMessage post =
+                            new org.telegram.telegrambots.meta.api.methods.send.SendMessage();
+                        post.setChatId(channel);
+                        post.setText(telegramText);
+                        telegramBot.execute(post);
+                        messageService.markPlatformPosted(message, "TELEGRAM");
+                    } catch (Exception e) {
+                        System.err.println("Telegram failed: " + e.getMessage());
+                    }
                 }
 
-                messageService.markAsPosted(message);
+                // Discord
+                if (!messageService.isPlatformPosted(message, "DISCORD")) {
+                    try {
+                        String discordText = llmService.generatePost(message.getContent(), message.getStreamLink(), "DISCORD");
+                        var discordChannel = jda.getTextChannelById(discordChannelId);
+                        if (discordChannel != null && discordText != null) {
+                            discordChannel.sendMessage(discordText).queue();
+                            messageService.markPlatformPosted(message, "DISCORD");
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Discord failed: " + e.getMessage());
+                    }
+                }
+
+                // Mark fully posted only when both done
+                if (messageService.isPlatformPosted(message, "TELEGRAM") && 
+                    messageService.isPlatformPosted(message, "DISCORD")) {
+                    messageService.markAsPosted(message);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

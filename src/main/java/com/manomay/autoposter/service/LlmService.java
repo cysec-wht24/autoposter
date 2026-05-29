@@ -43,10 +43,12 @@ public class LlmService {
 
     private String buildPrompt(String message, String streamLink, String platform) {
         return switch (platform) {
-            case "TELEGRAM"  -> "Write a short Telegram message announcing a livestream. " +
-                                "Message: " + message + ". Link: " + streamLink + ". Max 2 sentences, casual tone.";
-            case "DISCORD"   -> "Write a Discord announcement for a livestream with bold text formatting. " +
-                                "Message: " + message + ". Link: " + streamLink;
+            case "TELEGRAM" -> "Write ONE short Telegram message announcing a livestream. " +
+                            "Do not give multiple options. Casual tone, max 2 sentences. " +
+                            "Message: " + message + ". Link: " + streamLink;
+            case "DISCORD" -> "Write ONE Discord announcement for a livestream. Do not give multiple options. " +
+                            "Use **bold** for key words. Include @everyone at the start. Max 3 sentences. Keep it playful and to the point. " +
+                            "Message: " + message + ". Link: " + streamLink;
             default -> message + " " + streamLink;
         };
     }

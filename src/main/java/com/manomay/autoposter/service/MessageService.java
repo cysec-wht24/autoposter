@@ -33,6 +33,21 @@ public class MessageService {
         return messageRepository.findByStatus("PENDING");
     }
 
+    public void markPlatformPosted(Message message, String platform) {
+        String current = message.getPostedPlatforms();
+        if (current == null || current.isEmpty()) {
+            message.setPostedPlatforms(platform);
+        } else {
+            message.setPostedPlatforms(current + "," + platform);
+        }
+        messageRepository.save(message);
+    }
+
+    public boolean isPlatformPosted(Message message, String platform) {
+        String current = message.getPostedPlatforms();
+        return current != null && current.contains(platform);
+    }
+
     public void markAsPosted(Message message) {
         message.setStatus("POSTED");
         messageRepository.save(message);

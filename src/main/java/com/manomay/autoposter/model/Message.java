@@ -18,6 +18,7 @@ public class Message {
     private String content;
     private String streamLink;
     private LocalDateTime scheduledTime;
+    private String postedPlatforms = "";
 
     public Message() {}
 
@@ -33,4 +34,8 @@ public class Message {
     public void setContent(String content) { this.content = content; }
     public void setStreamLink(String streamLink) { this.streamLink = streamLink; }
     public void setScheduledTime(LocalDateTime scheduledTime) { this.scheduledTime = scheduledTime; }
+
+    public String getPostedPlatforms() { return postedPlatforms; }
+    public void setPostedPlatforms(String postedPlatforms) { this.postedPlatforms = postedPlatforms; }
+
 }

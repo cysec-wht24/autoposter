@@ -1,7 +1,6 @@
 package com.manomay.autoposter.controller;
 
 import com.manomay.autoposter.model.Message;
-import com.manomay.autoposter.service.LlmService;
 import com.manomay.autoposter.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +11,9 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
-    private final LlmService llmService;
 
-    public MessageController(MessageService messageService, LlmService llmService) {
+    public MessageController(MessageService messageService) {
         this.messageService = messageService;
-        this.llmService = llmService;
     }
 
     @PostMapping
@@ -29,8 +26,4 @@ public class MessageController {
         return messageService.getAllMessages();
     }
 
-    @GetMapping("/test-llm")
-    public String testLlm() {
-        return llmService.generatePost("Going live now!", "https://youtube.com/live/test", "TELEGRAM");
-    }
 }
