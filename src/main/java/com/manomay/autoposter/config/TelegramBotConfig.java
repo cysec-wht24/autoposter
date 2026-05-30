@@ -58,22 +58,44 @@ public class TelegramBotConfig {
                 }
 
                 if (text.equals("/start")) {
-                    send(chatId, """
-                        🤖 Autoposter Bot
+                    int pendingCount = messageService.getPendingCount();
+                    String queueWarning = pendingCount > 0 
+                        ? "\n⚠️ <b>Warning:</b> " + pendingCount + " message(s) pending in queue. Use /clear to reset." 
+                        : "";
+
+                    SendMessage menuMsg = new SendMessage();
+                    menuMsg.setChatId(chatId.toString());
+                    menuMsg.setParseMode("HTML");
+                    menuMsg.setText("""
+                        🤖 <b>Autoposter Bot</b>
                         
-                        Available commands:
+                        <b>Available commands:</b>
                         
-                        /start - Show this menu
-                        /post  - Queue a message for posting
+                        /start  - Show this menu
+                        /post   - Queue a message for posting
+                        /clear  - Clear all pending messages
+                        /status - Show queue status
                         
-                        Usage:
+                        <b>Usage:</b>
                         /post Your message | https://yourstream.link
                         
-                        Example:
+                        <b>Example:</b>
                         /post Going live now! | https://youtube.com/live/abc123
                         
-                        📢 Posts to: Telegram + Discord
-                        """);
+                        📢 <b>Posts to:</b> Telegram + Discord
+                        """ + queueWarning);
+                    try {
+                        execute(menuMsg);
+                    } catch (TelegramApiException e) {
+                        log.error("Failed to send menu: {}", e.getMessage());
+                    }
+                }  else if (text.equals("/clear")) {
+                    messageService.clearPendingMessages();
+                    send(chatId, "✅ Queue cleared.");
+
+                } else if (text.equals("/status")) {
+                    int count = messageService.getPendingCount();
+                    send(chatId, "📋 Pending messages in queue: " + count);
                 } else if (text.startsWith("/post ")) {
                     String[] parts = text.substring(6).split("\\|");
                     if (parts.length < 2) {

@@ -15,6 +15,10 @@ gemini:
   api:
     key: ${GEMINI_API_KEY}
 
+openrouter:
+  api:
+    key: ${OPENROUTER_API_KEY}
+
 telegram:
   bot:
     token: ${TELEGRAM_BOT_TOKEN}

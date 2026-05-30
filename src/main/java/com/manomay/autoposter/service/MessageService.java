@@ -29,6 +29,18 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public void clearPendingMessages() {
+        List<Message> pending = messageRepository.findByStatus("PENDING");
+        for (Message message : pending) {
+            message.setStatus("CLEARED");
+            messageRepository.save(message);
+        }
+    }
+
+    public int getPendingCount() {
+        return messageRepository.findByStatus("PENDING").size();
+    }
+
     public List<Message> getPendingMessages() {
         return messageRepository.findByStatus("PENDING");
     }
