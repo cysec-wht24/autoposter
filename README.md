@@ -4,7 +4,7 @@ A Spring Boot bot that posts AI-generated livestream announcements to Telegram a
 
 ## Demo
 
-[![Autoposter Demo](https://img.shields.io/badge/Watch%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/8oqcWnGwauw)
+https://github.com/user-attachments/assets/ad1078c2-b478-40bf-b45f-4ff1f4b46840
 
 ## How it works
 
