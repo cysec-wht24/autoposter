@@ -92,7 +92,9 @@ public class LlmService {
                    .append(platform)
                    .append(".\n");
         judgePrompt.append("Pick the BEST announcement based on: hype, clarity, engagement, brevity.\n");
-        judgePrompt.append("Return ONLY the winning text, nothing else.\n\n");
+        judgePrompt.append("Return ONLY the exact text of the winning announcement.\n\n");
+        judgePrompt.append("Do NOT say 'Option 1' or 'Option 2' or any label. Just return the announcement text itself and nothing else.\n\n");
+        judgePrompt.append("IMPORTANT: Your entire response must be ONLY the announcement text. No labels, no prefixes, no explanations.\n\n");
 
         for (int i = 0; i < candidates.size(); i++) {
             judgePrompt.append("Option ").append(i + 1).append(":\n")
