@@ -4,7 +4,7 @@ A Spring Boot bot that posts AI-generated livestream announcements to Telegram a
 
 ## Demo
 
-https://github.com/cysec-wht24/autoposter/raw/main/media/autoposterVid.mp4
+<video src="https://github.com/cysec-wht24/autoposter/raw/main/media/autoposterVid.mp4" controls width="100%"></video>
 
 ## How it works
 
